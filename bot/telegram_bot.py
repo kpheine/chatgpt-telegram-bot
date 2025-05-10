@@ -42,7 +42,8 @@ class ChatGPTTelegramBot:
             BotCommand(command='help', description=localized_text('help_description', bot_language)),
             BotCommand(command='reset', description=localized_text('reset_description', bot_language)),
             BotCommand(command='stats', description=localized_text('stats_description', bot_language)),
-            BotCommand(command='resend', description=localized_text('resend_description', bot_language))
+            BotCommand(command='resend', description=localized_text('resend_description', bot_language)),
+            BotCommand(command='plugins', description="See currently enabled plugins")
         ]
         # If imaging is enabled, add the "image" command to the list
         if self.config.get('enable_image_generation', False):
@@ -1042,6 +1043,15 @@ class ChatGPTTelegramBot:
         """
         await application.bot.set_my_commands(self.group_commands, scope=BotCommandScopeAllGroupChats())
         await application.bot.set_my_commands(self.commands)
+    
+    async def plugins(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """
+        Show currently enabled plugins
+        """
+        await update.effective_message.reply_text(
+            message_thread_id=get_thread_id(update),
+            text=f"Currently enabled plugins: {', '.join(self.config['plugins'])}"
+        )
 
     def run(self):
         """

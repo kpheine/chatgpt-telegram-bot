@@ -105,6 +105,7 @@ def main():
     plugin_config = {
         'plugins': os.environ.get('PLUGINS', '').split(',')
     }
+    logging.info(f'Plugin config: {plugin_config}')
 
     # Setup and run ChatGPT and Telegram bot
     plugin_manager = PluginManager(config=plugin_config)

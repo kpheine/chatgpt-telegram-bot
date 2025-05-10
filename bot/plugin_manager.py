@@ -41,6 +41,8 @@ class PluginManager:
             'webshot': WebshotPlugin,
             'iplocation': IpLocationPlugin,
         }
+        if enabled_plugins == []:
+            enabled_plugins = list(plugin_mapping.keys())
         self.plugins = [plugin_mapping[plugin]() for plugin in enabled_plugins if plugin in plugin_mapping]
 
     def get_functions_specs(self):
